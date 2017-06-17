@@ -1,4 +1,4 @@
-﻿using HomeWork1.Models;
+﻿using HomeWork1.ViewModels;
 
 namespace HomeWork1.Helper
 {

@@ -1,32 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using HomeWork1.Models;
+﻿using System.Web.Mvc;
+using HomeWork1.Repositories;
+using HomeWork1.Services;
+using HomeWork1.ViewModels;
 
 namespace HomeWork1.Controllers
 {
     public class BalanceEntryController : Controller
     {
-        public static List<BalanceEntry> FakeBalancies = new List<BalanceEntry>(MakeFakeData(200));
-
-        public static IEnumerable<BalanceEntry> MakeFakeData(int count)
-        {
-            Random rand = new Random();
-            for (int i = 0; i < count; i++)
-            {
-                int randNum = rand.Next(0, 10000);
-                var category = randNum % 2 == 1 ? EnumCategory.Expense : EnumCategory.Revenue;
-                var entry = new BalanceEntry
-                {
-                    Category = category,
-                    Date = DateTime.Now.Subtract(new TimeSpan(0, 0, randNum)),
-                    Description = $"buy {i} item at {DateTime.Now:yyyy/MM/dd HH:mm:ss}",
-                    Money = Convert.ToDecimal(randNum),
-                };
-
-                yield return entry;
-            }
-        }
+        protected AccountBookService _actBkSvr = new AccountBookService(new EFUnitOfWork());
 
         public ActionResult Index()
         {
@@ -36,13 +17,14 @@ namespace HomeWork1.Controllers
         [HttpPost]
         public ActionResult Create(BalanceEntry entry)
         {
-            FakeBalancies.Add(entry);
+            _actBkSvr.Add(entry);
+            _actBkSvr.Save();
             return RedirectToAction("Index");
         }
 
         public ActionResult List()
         {
-            return View(FakeBalancies);
+            return View(_actBkSvr.Lookup());
         }
     }
 }

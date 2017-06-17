@@ -1,5 +1,5 @@
 ﻿@using HomeWork1.Helper
-@model IEnumerable<HomeWork1.Models.BalanceEntry>
+@model IEnumerable<HomeWork1.ViewModels.BalanceEntry>
 @{
     Layout = null;
 }
@@ -14,12 +14,12 @@
             </tr>
             @{
                 int sernalNo = 0;
-                foreach (var item in Model.OrderByDescending(x => x.Date))
+                foreach (var item in Model)
                 {
                     <tr>
                         <td>@(++sernalNo)</td>
                         <td>@item.GetCategoryText()</td>
-                        <td>@item.Date.ToString("yyyy-MM-dd HH:mm:ss fff")</td>
+                        <td>@item.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
                         <td>@item.Money.ToString("c")</td>
                     </tr>
                 }
