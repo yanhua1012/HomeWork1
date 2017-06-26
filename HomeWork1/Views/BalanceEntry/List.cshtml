@@ -1,4 +1,6 @@
 ﻿@using HomeWork1.Helper
+@using HomeWork1.ViewModels
+
 @model IEnumerable<HomeWork1.ViewModels.BalanceEntry>
 @{
     Layout = null;
@@ -18,7 +20,7 @@
                 {
                     <tr>
                         <td>@(++sernalNo)</td>
-                        <td>@item.GetCategoryText()</td>
+                        <td>@(ShowCategoryText(item.Category))</td>
                         <td>@item.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
                         <td>@item.Money.ToString("c")</td>
                     </tr>
@@ -27,3 +29,18 @@
         </table>
     </div>
 </div>
+
+@helper ShowCategoryText(EnumCategory? category)
+{
+    if (category.HasValue)
+    {
+        if (category == EnumCategory.Expense)
+        {
+            <span style="color:red">支出</span>
+        }
+        else if (category == EnumCategory.Revenue)
+        {
+            <span style="color:blue">收入</span>
+        }
+    }
+}

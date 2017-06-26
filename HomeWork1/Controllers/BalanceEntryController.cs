@@ -17,9 +17,28 @@ namespace HomeWork1.Controllers
         [HttpPost]
         public ActionResult Create(BalanceEntry entry)
         {
-            _actBkSvr.Add(entry);
-            _actBkSvr.Save();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _actBkSvr.Add(entry);
+                _actBkSvr.Save();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AjaxCreate(BalanceEntry entry)
+        {
+            if (ModelState.IsValid)
+            {
+                _actBkSvr.Add(entry);
+                _actBkSvr.Save();
+            }
+
+            return View("List", _actBkSvr.Lookup());
         }
 
         public ActionResult List()
