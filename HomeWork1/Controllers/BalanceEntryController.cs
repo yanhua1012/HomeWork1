@@ -14,6 +14,7 @@ namespace HomeWork1.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Create(BalanceEntry entry)
         {
@@ -29,6 +30,7 @@ namespace HomeWork1.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult AjaxCreate(BalanceEntry entry)
         {

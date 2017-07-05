@@ -10,6 +10,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -40,6 +41,23 @@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript" src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if (!isSupportHtml5Date()) {
+                $("input[type=date]").datepicker({
+                    dateFormat: "yy-mm-dd"
+                });
+            }
+            $("input[name=Money]").spinner();
+        });
+
+        function isSupportHtml5Date() {
+            var datefield = document.createElement("input")
+            datefield.setAttribute("type", "date")
+            return (datefield.type == "date");
+        }
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

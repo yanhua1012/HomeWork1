@@ -13,6 +13,7 @@
                 <th>類別</th>
                 <th>日期</th>
                 <th>金額</th>
+                <th>動作</th>
             </tr>
             @{
                 int sernalNo = 0;
@@ -23,6 +24,7 @@
                         <td>@(ShowCategoryText(item.Category))</td>
                         <td>@item.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
                         <td>@item.Money.ToString("c")</td>
+                        <td>@Html.ActionLink("編輯", "Edit", "BalanceEntry", new { Area = "Management", id = item.Id }, new { })</td>
                     </tr>
                 }
                             }

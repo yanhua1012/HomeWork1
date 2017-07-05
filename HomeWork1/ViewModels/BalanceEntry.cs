@@ -6,6 +6,8 @@ namespace HomeWork1.ViewModels
 {
     public class BalanceEntry
     {
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = "類別為必填欄位")]
         public EnumCategory? Category { get; set; }
 
@@ -16,6 +18,7 @@ namespace HomeWork1.ViewModels
         [Required(ErrorMessage = "日期為必填欄位")]
         [DataType(DataType.Date, ErrorMessage ="請輸入日期格式")]
         [LargeOrEqualDate()]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "備註為必填欄位")]
