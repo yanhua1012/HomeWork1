@@ -1,7 +1,9 @@
 ﻿@using HomeWork1.Helper
 @using HomeWork1.ViewModels
+@using PagedList
+@using PagedList.Mvc
 
-@model IEnumerable<HomeWork1.ViewModels.BalanceEntry>
+@model IPagedList<HomeWork1.ViewModels.BalanceEntry>
 @{
     Layout = null;
 }
@@ -29,6 +31,9 @@
                 }
                             }
         </table>
+        <nav>
+            @Html.PagedListPager(Model, d => Url.Action("Index", new { page = d }))
+        </nav>
     </div>
 </div>
 

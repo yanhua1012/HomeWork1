@@ -49,7 +49,7 @@
     </div>
     <div id="divList">
         @{
-            Html.RenderAction("List", "BalanceEntry");
+            Html.RenderAction("List", "BalanceEntry", new { page = (int?) ViewData["Page"] });
         }
     </div>
     @section scripts {

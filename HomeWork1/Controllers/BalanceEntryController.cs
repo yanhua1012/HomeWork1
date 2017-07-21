@@ -2,6 +2,8 @@
 using HomeWork1.Repositories;
 using HomeWork1.Services;
 using HomeWork1.ViewModels;
+using PagedList;
+using System.Linq;
 
 namespace HomeWork1.Controllers
 {
@@ -9,8 +11,14 @@ namespace HomeWork1.Controllers
     {
         protected AccountBookService _actBkSvr = new AccountBookService(new EFUnitOfWork());
 
-        public ActionResult Index()
+        const int PageSize = 10;
+
+        public ActionResult Index(int? page)
         {
+            int pageNumber = page.HasValue ? page.Value : 1;
+            if (pageNumber < 1) { pageNumber = 1; }
+
+            this.ViewData.Add("Page", pageNumber);
             return View();
         }
 
@@ -40,12 +48,18 @@ namespace HomeWork1.Controllers
                 _actBkSvr.Save();
             }
 
-            return View("List", _actBkSvr.Lookup());
+
+            return View("List", _actBkSvr.Lookup().OrderByDescending(x => x.Date).ToPagedList(1, PageSize));
         }
 
-        public ActionResult List()
+        public ActionResult List(int? page)
         {
-            return View(_actBkSvr.Lookup());
+            int pageNumber = page.HasValue ? page.Value : 1;
+            if (pageNumber < 1) { pageNumber = 1; }
+
+            // 一定要先做排序處理，否則分頁處理會報錯
+            var model = _actBkSvr.Lookup().OrderByDescending(x => x.Date).ToPagedList(pageNumber, PageSize);
+            return View(model);
         }
     }
 }
